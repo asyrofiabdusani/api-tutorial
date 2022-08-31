@@ -11,20 +11,31 @@ function showFilmList(data) {
         txtError.innerHTML = 'Error connection, please try again . . .';
     } else {
         let card = '';
-        data.forEach(e => {
-            card += `
-                <div class="card m-2" style="width: 18rem">
-                    <img src="${e.Poster}" class="card-img-top img-thumbnail" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">${e.Title}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">${e.Year}</h6>
-                        <p class="card-text">
-                            Sinopsis
-                        </p>
-                    </div>
-                </div>`;
 
+        data.forEach(e => {
+            fetch(`http://www.omdbapi.com/?apikey=a0861315&i=${e.imdbID}`)
+                .then((response) => response.json())
+                .then((detail) => {
+                    card += cardList(detail.Poster, detail.Title, detail.Actors, detail.Plot);
+
+                    movieBox.innerHTML = card;
+                })
+                .catch(() => showFilmList(false));
         });
-        movieBox.innerHTML = card;
+
     }
+}
+function cardList(poster, title, actors, plot) {
+    return `
+        <div class="card m-2 shadow-sm" data-bs-toggle="modal"
+        data-bs-target="#movieModal" style="width: 18rem">
+            <img src="${poster}" class="card-img-top img-thumbnail" alt="..." />
+            <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-subtitle mb-2 text-muted">${actors}</p>
+                <p class="card-text mt-4">
+                    ${plot}
+                </p>
+            </div>
+        </div>`;
 }
