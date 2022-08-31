@@ -16,21 +16,26 @@
         width: 80%;
         margin: 17px auto;
       }
+
+      #detail-movie:hover {
+        opacity: 0.8;
+      }
     </style>
   </head>
   <body>
-    <h1 class="text-center">Wellcome In The Movie Info Web</h1>
+    <h1 class="text-center ttl">Wellcome In The Movie Info Web</h1>
 
     <div class="input-group my-3">
       <input
         type="text"
         class="form-control"
-        placeholder="Cari film . . ."
-        aria-label="Cari film . . ."
+        placeholder="Search movie . . ."
+        aria-label="Search movie . . ."
         aria-describedby="button"
+        id="keyword"
       />
-      <button class="btn btn-primary px-4" type="button" id="button">
-        Cari
+      <button class="btn btn-primary px-4" type="button" id="bt-search">
+        Search
       </button>
     </div>
 

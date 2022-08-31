@@ -1,10 +1,15 @@
 const txtError = document.querySelector('.error-connection');
 const movieBox = document.querySelector('.movie-box');
+const keyword = document.querySelector('#keyword');
+const btSearch = document.querySelector('#bt-search');
 
-movies();
+btSearch.addEventListener('click', () => {
+    txtError.innerHTML = 'We are collecting the Movies, please wait . . .';
+    movies();
+});
 
 function movies() {
-    fetch('http://www.omdbapi.com/?apikey=a0861315&s=avengers')
+    fetch(`http://www.omdbapi.com/?apikey=a0861315&s=${keyword.value}`)
         .then((response) => response.json())
         .then((data) => showFilmList(data.Search))
         .catch(() => showFilmList(false));
@@ -12,7 +17,6 @@ function movies() {
 
 function showFilmList(data) {
     if (!data) {
-        txtError.innerHTML = 'Error connection, please wait . . .';
         movies();
     } else {
         let card = '';
@@ -30,12 +34,10 @@ function showFilmList(data) {
                                 .then((response) => response.json())
                                 .then((detail) => {
                                     modalContent(detail);
-                                })
-                                .catch(() => showFilmList(false));
+                                });
                         });
                     });
-                })
-                .catch(() => showFilmList(false));
+                });
         });
 
     }
