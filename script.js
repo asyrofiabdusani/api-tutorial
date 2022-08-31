@@ -15,10 +15,39 @@ function showFilmList(data) {
         data.forEach(e => {
             fetch(`http://www.omdbapi.com/?apikey=a0861315&i=${e.imdbID}`)
                 .then((response) => response.json())
-                .then((detail) => {
-                    card += cardList(detail.Poster, detail.Title, detail.Actors, detail.Plot);
+                .then((movie) => {
+                    card += cardList(movie.Poster, movie.Title, movie.Actors, movie.Plot);
 
                     movieBox.innerHTML = card;
+
+                    const detailMv = document.querySelector('#detail-movie');
+                    detailMv.addEventListener('click', function () {
+                        fetch(`http://www.omdbapi.com/?apikey=a0861315&i=${movie.imdbID}`)
+                            .then((response) => response.json())
+                            .then((detail) => {
+                                console.log(detail);
+                                const title = document.querySelector('.modal-title');
+                                const actors = document.querySelector('.modal-actors');
+                                const director = document.querySelector('.modal-director');
+                                const year = document.querySelector('.modal-year');
+                                const rating = document.querySelector('.modal-rating');
+                                const genre = document.querySelector('.modal-genre');
+                                const duration = document.querySelector('.modal-duration');
+                                const plot = document.querySelector('.modal-plot');
+
+                                title.innerHTML = detail.Title;
+                                actors.innerHTML = detail.Actors;
+                                director.innerHTML = detail.Director;
+                                year.innerHTML = detail.Year;
+                                rating.innerHTML = detail.Rating;
+                                rating.innerHTML = detail.Rating;
+                                genre.innerHTML = detail.Genre;
+                                duration.innerHTML = detail.Runtime;
+                                plot.innerHTML = detail.Plot;
+
+                            })
+                            .catch(() => showFilmList(false));
+                    });
                 })
                 .catch(() => showFilmList(false));
         });
@@ -27,7 +56,7 @@ function showFilmList(data) {
 }
 function cardList(poster, title, actors, plot) {
     return `
-        <div class="card m-2 shadow-sm" data-bs-toggle="modal"
+        <div class="card m-2 shadow-sm" id="detail-movie" data-bs-toggle="modal"
         data-bs-target="#movieModal" style="width: 18rem">
             <img src="${poster}" class="card-img-top img-thumbnail" alt="..." />
             <div class="card-body">
