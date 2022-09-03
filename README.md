@@ -7,3 +7,6 @@ When the respon from the API is ok, the next step is to show the result in the l
 This diagram will show the step to start make the web using API
 
 ![image](https://user-images.githubusercontent.com/37644705/187706644-370885c8-5e1e-4612-9230-486899703a6f.png)
+
+
+*note : see the commit to know the step of code for this tutorial
